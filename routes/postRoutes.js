@@ -11,7 +11,7 @@ router
 
 // Routes with ID
 router
-  .route(":id")
+  .route("/:id")
   .get(postController.getPost)
   .patch(postController.updatePost)
   .delete(postController.deletePost);
