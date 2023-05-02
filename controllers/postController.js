@@ -1,4 +1,4 @@
-const Post = require("../models/postsModel");
+const Post = require("../models/postModel");
 const APIFeatures = require("./../utils/apiFeatures");
 
 exports.getAllPosts = async (req, res) => {
