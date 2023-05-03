@@ -16,10 +16,6 @@ const postSchema = new mongoose.Schema(
       required: [true, "A post must have a description"],
       trim: true,
     },
-    // description: {
-    //   type: String,
-    //   required: [true, "A post must have a description"],
-    // },
     location: {
       type: String,
       required: [true, "A post must have a location"],
