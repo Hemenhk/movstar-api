@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/authModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const Post = require("../models/postModel");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -78,6 +79,15 @@ exports.signout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Get token and check if it exists
+
+  const post = await Post.findById(req.params.id);
+
+  if (!post) {
+    return res.status(404).json({
+      message: "Post not found",
+    });
+  }
+
   let token;
   if (
     req.headers.authorization &&
@@ -93,12 +103,19 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
     return next(
       new AppError("The user belonging to this token does no longer exist", 401)
     );
+  }
+
+  if (post.creator.toString() !== currentUser) {
+    return res.status(403).json({
+      message: "You are not authorized to perform this action",
+    });
   }
   // 4) Check if user changed password after token was issued
 

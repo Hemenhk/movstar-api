@@ -3,6 +3,11 @@ const slugify = require("slugify");
 
 const postSchema = new mongoose.Schema(
   {
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     title: {
       type: String,
       required: [true, "A post must have a title"],
