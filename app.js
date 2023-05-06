@@ -7,7 +7,7 @@ const userRoutes = require("./routes/authRoutes");
 const postRoutes = require("./routes/postRoutes");
 
 app.use(express.json());
-app.use(cookieParser())
+// app.use(cookieParser())
 app.use(cors());
 // Routes
 
