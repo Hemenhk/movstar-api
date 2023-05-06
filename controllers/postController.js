@@ -46,8 +46,21 @@ exports.getPost = async (req, res) => {
 };
 exports.createPost = async (req, res) => {
   try {
-    req.body.creator = res.data.user._id;
-    const newPost = await Post.create(req.body);
+    const { title, description, location, price, owner, imageCover, images } = req.body;
+
+    // Set the creator field to the logged in user's _id
+    const creator = req.data.user._id;
+
+    const newPost = await Post.create({
+      creator,
+      title,
+      description,
+      location,
+      price,
+      owner,
+      imageCover,
+      images
+    });
     res.status(201).json({
       status: "Post was successfully created",
       data: {
