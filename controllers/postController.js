@@ -1,5 +1,6 @@
 const Post = require("../models/postModel");
 const APIFeatures = require("./../utils/apiFeatures");
+const User = require("../models/authModel")
 
 exports.getAllPosts = async (req, res) => {
   try {
@@ -45,9 +46,27 @@ exports.getPost = async (req, res) => {
 };
 
 exports.createPost = async (req, res) => {
-  try {
-    req.body.creator = req.user._id
-    const newPost = await Post.create(req.body);
+
+    try {
+      const {
+        title,
+        description,
+        location,
+        price,
+        imageCover,
+        images,
+      } = req.body;
+  
+      const newPost = await Post.create({
+        title,
+        description,
+        location,
+        price,
+        imageCover,
+        images,
+        creator: req.user._id, // req.user contains the logged-in user's information
+        owner: req.user.username,
+      });
     res.status(201).json({
       status: "Post was successfully created",
       data: {
