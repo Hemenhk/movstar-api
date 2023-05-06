@@ -64,8 +64,8 @@ exports.createPost = async (req, res) => {
         price,
         imageCover,
         images,
-        creator: req.user._id, // req.user contains the logged-in user's information
-        owner: req.user.username,
+        creator: req.users._id, // req.user contains the logged-in user's information
+        owner: req.users.username,
       });
     res.status(201).json({
       status: "Post was successfully created",
