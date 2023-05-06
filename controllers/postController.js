@@ -1,6 +1,6 @@
 const Post = require("../models/postModel");
 const APIFeatures = require("./../utils/apiFeatures");
-const User = require("../models/authModel")
+const User = require("../models/authModel");
 
 exports.getAllPosts = async (req, res) => {
   try {
@@ -44,29 +44,10 @@ exports.getPost = async (req, res) => {
     });
   }
 };
-
 exports.createPost = async (req, res) => {
-
-    try {
-      const {
-        title,
-        description,
-        location,
-        price,
-        imageCover,
-        images,
-      } = req.body;
-  
-      const newPost = await Post.create({
-        title,
-        description,
-        location,
-        price,
-        imageCover,
-        images,
-        creator: req.users._id, // req.user contains the logged-in user's information
-        owner: req.users.username,
-      });
+  try {
+    req.body.creator = req.data.users._id;
+    const newPost = await Post.create(req.body);
     res.status(201).json({
       status: "Post was successfully created",
       data: {
@@ -80,6 +61,25 @@ exports.createPost = async (req, res) => {
     });
   }
 };
+
+// exports.createPost = async (req, res) => {
+//   try {
+//     const userId = User.findById(res.users._id)
+//     req.body.creator = userId
+//     const newPost = await Post.create(req.body, );
+//     res.status(201).json({
+//       status: "Post was successfully created",
+//       data: {
+//         post: newPost,
+//       },
+//     });
+//   } catch (err) {
+//     res.status(404).json({
+//       status: "failed",
+//       message: err,
+//     });
+//   }
+// };
 
 exports.updatePost = async (req, res) => {
   try {
