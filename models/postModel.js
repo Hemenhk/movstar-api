@@ -3,7 +3,7 @@ const slugify = require("slugify");
 
 const postSchema = new mongoose.Schema(
   {
-    creator: {
+    author: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,

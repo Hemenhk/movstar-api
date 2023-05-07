@@ -44,23 +44,20 @@ exports.getPost = async (req, res) => {
     });
   }
 };
-exports.createPost = async (req, res) => {git
+
+exports.createPost = async (req, res) => {
   try {
-
-    const userId = User.findById(req.user._id)
-    const { title, description, location, price, owner, imageCover, images } = req.body;
-
-    // Set the creator field to the logged in user's _id
-
+    const userId = User.findById(req.user._id);
+    const { title, description, location, price, owner, imageCover } =
+      req.body;
     const newPost = await Post.create({
-      creator: userId,
       title,
       description,
+      author: userId,
       location,
       price,
       owner,
       imageCover,
-      images
     });
     res.status(201).json({
       status: "Post was successfully created",
@@ -69,7 +66,6 @@ exports.createPost = async (req, res) => {git
       },
     });
   } catch (err) {
-    console.log(err)
     res.status(404).json({
       status: "failed",
       message: err,

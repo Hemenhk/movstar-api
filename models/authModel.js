@@ -4,6 +4,12 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const authSchema = new mongoose.Schema({
+  posts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post"
+    }
+  ],
   username: {
     type: String,
     unique: true,
