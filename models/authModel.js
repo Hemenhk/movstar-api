@@ -4,12 +4,6 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const authSchema = new mongoose.Schema({
-  posts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post"
-    }
-  ],
   username: {
     type: String,
     unique: true,
@@ -48,13 +42,13 @@ const authSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true,
-    select: false
-  }
+    select: false,
+  },
 });
 
-authSchema.pre('save', async function(next) {
+authSchema.pre("save", async function (next) {
   // Only run this function if password was actually modified
-  if (!this.isModified('password')) return next();
+  if (!this.isModified("password")) return next();
 
   // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
@@ -64,7 +58,7 @@ authSchema.pre('save', async function(next) {
   next();
 });
 
-authSchema.methods.correctPassword = async function(
+authSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
 ) {
