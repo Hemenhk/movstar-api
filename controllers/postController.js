@@ -45,38 +45,19 @@ exports.getPost = async (req, res) => {
   }
 };
 
-exports.createPost = async (req, res) => {
-  try {
-    const { title, description, location, price, owner, imageCover } =
-      req.body;
-    const newPost = await Post.create({
-      title,
-      description,
-      author: req.data.user._id,
-      location,
-      price,
-      owner,
-      imageCover,
-    });
-    res.status(201).json({
-      status: "Post was successfully created",
-      data: {
-        post: newPost,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "failed",
-      message: err,
-    });
-  }
-};
-
 // exports.createPost = async (req, res) => {
 //   try {
-//     const userId = User.findById(res.users._id)
-//     req.body.creator = userId
-//     const newPost = await Post.create(req.body, );
+//     const { title, description, location, price, owner, imageCover } =
+//       req.body;
+//     const newPost = await Post.create({
+//       title,
+//       description,
+//       author: req.data.user._id,
+//       location,
+//       price,
+//       owner,
+//       imageCover,
+//     });
 //     res.status(201).json({
 //       status: "Post was successfully created",
 //       data: {
@@ -90,6 +71,25 @@ exports.createPost = async (req, res) => {
 //     });
 //   }
 // };
+
+exports.createPost = async (req, res) => {
+  try {
+    const userId = User.findById(res.users._id);
+    req.body.creator = userId;
+    const newPost = await Post.create(req.body);
+    res.status(201).json({
+      status: "Post was successfully created",
+      data: {
+        post: newPost,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "failed",
+      message: err,
+    });
+  }
+};
 
 exports.updatePost = async (req, res) => {
   try {
