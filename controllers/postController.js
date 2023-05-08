@@ -74,7 +74,7 @@ exports.getPost = async (req, res) => {
 
 exports.createPost = async (req, res) => {
   try {
-    const userId = req.data.user._id;
+    const userId = res.data.user._id;
     const newPost = await Post.create({
       ...req.body,
       author: userId,
@@ -88,7 +88,7 @@ exports.createPost = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: "failed",
-      message: err,
+      message: err.message,
     });
   }
 };
