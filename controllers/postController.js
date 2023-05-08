@@ -74,7 +74,7 @@ exports.getPost = async (req, res) => {
 
 exports.createPost = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.data.user._id;
     const newPost = await Post.create({
       ...req.body,
       author: userId,
