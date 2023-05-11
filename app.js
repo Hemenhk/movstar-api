@@ -1,14 +1,22 @@
 const express = require("express");
 const cors = require("cors");
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
 const app = express();
 const movieRoutes = require("./routes/movieRoutes");
 const userRoutes = require("./routes/authRoutes");
 const postRoutes = require("./routes/postRoutes");
 
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(express.json());
-app.use(cookieParser())
-app.use(cors());
+app.use(cookieParser());
+
 // Routes
 
 app.use("/api/movies", movieRoutes);
