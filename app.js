@@ -7,24 +7,10 @@ const movieRoutes = require("./routes/movieRoutes");
 const userRoutes = require("./routes/authRoutes");
 const postRoutes = require("./routes/postRoutes");
 
-app.use(
-  cors({
-    origin: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization", "Accept-Encoding"],
-    exposedHeaders: ["Content-Encoding"],
-  })
-);
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  next();
-});
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
-
-// app.use(xss());
 
 // Routes
 
