@@ -34,8 +34,8 @@ const postSchema = new mongoose.Schema(
       select: false,
     },
     owner: {
-      type: String,
-      required: [true, "A post must have an owner"],
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
     },
     ratingsQuantity: {
       type: Number,

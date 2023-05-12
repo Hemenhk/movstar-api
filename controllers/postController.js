@@ -45,38 +45,12 @@ exports.getPost = async (req, res) => {
   }
 };
 
-// exports.createPost = async (req, res) => {
-//   try {
-//     const { title, description, location, price, owner, imageCover } =
-//       req.body;
-//     const newPost = await Post.create({
-//       title,
-//       description,
-//       author: req.data.user._id,
-//       location,
-//       price,
-//       owner,
-//       imageCover,
-//     });
-//     res.status(201).json({
-//       status: "Post was successfully created",
-//       data: {
-//         post: newPost,
-//       },
-//     });
-//   } catch (err) {
-//     res.status(404).json({
-//       status: "failed",
-//       message: err,
-//     });
-//   }
-// };
-
 exports.createPost = async (req, res) => {
   try {
     const newPost = await Post.create({
       ...req.body,
       author: req.user._id,
+      owner: req.user.username
     });
     res.status(201).json({
       status: "Post was successfully created",
