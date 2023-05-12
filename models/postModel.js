@@ -34,8 +34,7 @@ const postSchema = new mongoose.Schema(
       select: false,
     },
     owner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      type: String,
     },
     ratingsQuantity: {
       type: Number,
