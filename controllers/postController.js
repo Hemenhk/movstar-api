@@ -1,6 +1,9 @@
+const multer = require("multer")
 const Post = require("../models/postModel");
 const APIFeatures = require("./../utils/apiFeatures");
 const User = require("../models/authModel");
+
+
 
 exports.getAllPosts = async (req, res) => {
   try {
