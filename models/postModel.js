@@ -46,7 +46,7 @@ const postSchema = new mongoose.Schema(
       max: [5, "Ratings must be 5.0 or less"],
     },
     imageCover: {
-      type: File,
+      type: String,
       required: [true, "A post must have an image cover"],
     },
     images: [String],
