@@ -1,9 +1,7 @@
-const multer = require("multer")
+const multer = require("multer");
 const Post = require("../models/postModel");
 const APIFeatures = require("./../utils/apiFeatures");
 const User = require("../models/authModel");
-
-
 
 exports.getAllPosts = async (req, res) => {
   try {
@@ -48,12 +46,30 @@ exports.getPost = async (req, res) => {
   }
 };
 
+exports.getPostByAuthor = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const posts = await Post.find({ author: id });
+    res.status(200).json({
+      status: "success",
+      data: {
+        posts,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "failed",
+      message: err.message
+    })
+  }
+};
+
 exports.createPost = async (req, res) => {
   try {
     const newPost = await Post.create({
       ...req.body,
       author: req.user._id,
-      owner: req.user.username
+      owner: req.user.username,
     });
     res.status(201).json({
       status: "Post was successfully created",
